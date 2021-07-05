@@ -93,6 +93,36 @@ Follow these steps to get your development environment set up: (Before Run Start
 ```csharp
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 ```
+
+BUILDING SOLUTION
+
+Go into th `src` folder, and run the command from `GitBash`
+```
+DOCKER_REGISTRY=yeskay.jfrog.io/skalavala/ docker-compose -f docker-compose.yml -f docker-compose.override.yml build
+```
+Pushing Docker Containers to your Container Repository
+
+If you are not already logged into your container repo, login first before pushing the images. 
+
+```
+$ docker login yeskay.jfrog.io
+username: xxx@yyy.com
+password: xxxyyyzzz
+```
+After login, push the images
+
+```
+docker push yeskay.jfrog.io/skalavala/aspnetrunbasics:latest
+docker push yeskay.jfrog.io/skalavala/shoppingaggregator:latest
+docker push yeskay.jfrog.io/skalavala/ocelotapigw:latest
+docker push yeskay.jfrog.io/skalavala/catalogapi:latest
+docker push yeskay.jfrog.io/skalavala/discountgrpc:latest
+docker push yeskay.jfrog.io/skalavala/orderingapi:latest
+docker push yeskay.jfrog.io/skalavala/basketapi:latest
+docker push yeskay.jfrog.io/skalavala/discountapi:latest
+docker push yeskay.jfrog.io/skalavala/webstatus:latest
+```
+
 3. Wait for docker compose all microservices. That’s it! (some microservices need extra time to work so please wait if not worked in first shut)
 
 4. You can **launch microservices** as below urls:
