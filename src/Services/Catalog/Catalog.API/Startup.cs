@@ -1,3 +1,4 @@
+using System;
 using Catalog.API.Data;
 using Catalog.API.Data.Interfaces;
 using Catalog.API.Repositories;
@@ -26,17 +27,25 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Console.WriteLine("Starting ConfigureServices...");
             services.AddScoped<ICatalogContext, CatalogContext>();
             services.AddScoped<IProductRepository, ProductRepository>();
 
+            Console.WriteLine("Adding Controllers...");
             services.AddControllers();
+
+            Console.WriteLine("Adding Swagger...");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" });
             });
 
+            Console.WriteLine("Adding MongoDb HealthChecks with connection string: " + Configuration["DatabaseSettings:ConnectionString"]);
+            
             services.AddHealthChecks()
                     .AddMongoDb(Configuration["DatabaseSettings:ConnectionString"], "MongoDb Health", HealthStatus.Degraded);
+
+            Console.WriteLine("Completed ConfigureServices...");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,9 +53,11 @@ namespace Catalog.API
         {
             if (env.IsDevelopment())
             {
+                Console.WriteLine("in the development mode...");
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1"));
+                Console.WriteLine("Setting up Swagger at: /swagger/v1/swagger.json");
             }
 
             app.UseRouting();

@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Catalog.API.Data
 {
@@ -9,10 +10,14 @@ namespace Catalog.API.Data
     {
         public static void SeedData(IMongoCollection<Product> productCollection)
         {
+            Console.WriteLine("In SeedData...");
             bool existProduct = productCollection.Find(p => true).Any();
+            Console.WriteLine( "Products exist in the database: " + existProduct.ToString());
             if (!existProduct)
             {
+                Console.WriteLine("Adding products to the collection...");
                 productCollection.InsertManyAsync(GetPreconfiguredProducts());
+                Console.WriteLine("Successfully added products!");
             }
         }
 

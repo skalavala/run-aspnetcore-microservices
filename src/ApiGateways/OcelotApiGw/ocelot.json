@@ -122,6 +122,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5010"
+    "BaseUrl": "http://asprunbasics-gw:8080"
   }
 }
